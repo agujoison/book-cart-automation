@@ -16,7 +16,7 @@ export class HomePage {
   }
 
   async goto() {
-    await this.page.goto('https://bookcart.azurewebsites.net/');
+    await this.page.goto('/');
   }
 
   async goToLogin() {

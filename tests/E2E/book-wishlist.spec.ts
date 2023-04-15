@@ -1,12 +1,10 @@
 import { test, expect, type Page } from '@playwright/test';
-import { LoginPage } from '../pages/login-page';
-import { HomePage } from '../pages/home-page';
-import { WishlistPage } from '../pages/wishlist-page';
-
-let apiContext;
+import { LoginPage } from '../../pages/login-page';
+import { HomePage } from '../../pages/home-page';
+import { WishlistPage } from '../../pages/wishlist-page';
 
 test.beforeEach(async ({ request }) => {
-    const loginResponse = await request.post('https://bookcart.azurewebsites.net/api/Login', {
+    const loginResponse = await request.post('/api/Login', {
         data: {
           username: 'agujoison',
           password: '31Julio$',
@@ -15,7 +13,7 @@ test.beforeEach(async ({ request }) => {
     expect(loginResponse.ok()).toBeTruthy();
     let token = JSON.parse(await loginResponse.text()).token;
  
-    const response = await request.delete('https://bookcart.azurewebsites.net/api/Wishlist/14911', {
+    const response = await request.delete('/api/Wishlist/14911', {
         headers: {
           'Accept': 'application/json',
           'Authorization': `Bearer ${token}`,

@@ -1,10 +1,11 @@
 import { test, expect, type Page } from '@playwright/test';
-import { LoginPage } from '../pages/login-page';
-import { ShoppingCartPage } from '../pages/shopping-cart-page';
-import { CheckoutPage } from '../pages/checkout-page';
-import { HomePage } from '../pages/home-page';
-import { MyOrdersPage } from '../pages/my-orders-page';
+import { LoginPage } from '../../pages/login-page';
+import { ShoppingCartPage } from '../../pages/shopping-cart-page';
+import { CheckoutPage } from '../../pages/checkout-page';
+import { HomePage } from '../../pages/home-page';
+import { MyOrdersPage } from '../../pages/my-orders-page';
 
+//Parametrize test
 test.describe('BookCart', () => {
   test('should allow me to order a book as logged in user', async ({ page }) => {
     const homePage = new HomePage(page);
