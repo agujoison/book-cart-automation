@@ -12,8 +12,9 @@ test.beforeEach(async ({ request }) => {
     });
     expect(loginResponse.ok()).toBeTruthy();
     let token = JSON.parse(await loginResponse.text()).token;
+    const userId = JSON.parse(await loginResponse.text()).userDetails.userId;
  
-    const response = await request.delete('/api/Wishlist/14911', {
+    const response = await request.delete(`/api/Wishlist/${userId}`, {
         headers: {
           'Accept': 'application/json',
           'Authorization': `Bearer ${token}`,

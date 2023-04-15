@@ -12,8 +12,14 @@ test.describe('BookCart API', () => {
         expect(await loginResponse).toMatchJSON({
             token: expect.any(String),
             userDetails: {
-                userId: expect.any(Number)
+                userId: expect.any(Number),
+                firstName: null,
+		        lastName: null,
+		        username: expect.any(String),
+		        password: null,
+		        gender: null,
+		        userTypeId: expect.any(Number)
             }
         });
     });
-  });
+});
