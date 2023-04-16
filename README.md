@@ -2,11 +2,11 @@
 Test Automation Framework for BookCart application
 
 ## Installation
-After clone the repository execute the folling npm command
+After clone the repository execute the folling npm command:
 npx playwright install 
 
-## Execution
+## Execute Test Suite
 npx playwright test
 
-## Executin results report
+## Execution results report
 npx playwright show-report
