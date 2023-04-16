@@ -1,14 +1,10 @@
 import { test, expect} from '@playwright/test';
+import { Opertions } from './operations';
 
 test.describe('BookCart API', () => {
     test('should allow me to login with my user', async ({ request }) => {
-        const loginResponse = await request.post('/api/Login', {
-            data: {
-              username: 'agujoison',
-              password: '31Julio$',
-            }
-        });
-        expect(loginResponse.ok()).toBeTruthy();
+        const operations = new Opertions();
+        const loginResponse = await operations.apiLogin(request, 'marjoison', '31Julio$');
         expect(await loginResponse).toMatchJSON({
             token: expect.any(String),
             userDetails: {

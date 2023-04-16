@@ -4,6 +4,18 @@ import { ShoppingCartPage } from '../../pages/shopping-cart-page';
 import { CheckoutPage } from '../../pages/checkout-page';
 import { HomePage } from '../../pages/home-page';
 import { MyOrdersPage } from '../../pages/my-orders-page';
+import { Opertions } from '../API/operations';
+
+const operations = new Opertions();
+let apiContext;
+
+test.beforeEach(async ({ playwright, request }) => {
+  const loginResponse = await operations.apiLogin(request, 'agujoison', '31Julio$');
+  let token = JSON.parse(await loginResponse.text()).token;
+  const userId = JSON.parse(await loginResponse.text()).userDetails.userId;
+  apiContext = await operations.createContext(playwright, token);
+  operations.deleteWishlist(apiContext, userId);
+});
 
 //Parametrize test
 test.describe('BookCart', () => {
@@ -13,7 +25,8 @@ test.describe('BookCart', () => {
     await homePage.goToLogin();
     const loginPage = new LoginPage(page);
     await loginPage.loginWithCredentials('agujoison', '31Julio$');
-    await homePage.addBookToCartByName('HP5');
+    const book = await operations.getABook(apiContext);
+    await homePage.addBookToCartByName(book.title);
     await homePage.goToShoppingCart();
     const shoppingCartPage = new ShoppingCartPage(page);
     await shoppingCartPage.goToCheckout();

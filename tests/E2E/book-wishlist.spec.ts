@@ -2,24 +2,16 @@ import { test, expect, type Page } from '@playwright/test';
 import { LoginPage } from '../../pages/login-page';
 import { HomePage } from '../../pages/home-page';
 import { WishlistPage } from '../../pages/wishlist-page';
+import { Opertions } from '../API/operations';
 
-test.beforeEach(async ({ request }) => {
-    const loginResponse = await request.post('/api/Login', {
-        data: {
-          username: 'agujoison',
-          password: '31Julio$',
-        }
-    });
-    expect(loginResponse.ok()).toBeTruthy();
-    let token = JSON.parse(await loginResponse.text()).token;
-    const userId = JSON.parse(await loginResponse.text()).userDetails.userId;
- 
-    const response = await request.delete(`/api/Wishlist/${userId}`, {
-        headers: {
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        }});
-    expect(response.ok()).toBeTruthy();
+const operations = new Opertions();
+
+test.beforeEach(async ({ playwright, request }) => {
+  const loginResponse = await operations.apiLogin(request, 'agujoison', '31Julio$');
+  let token = JSON.parse(await loginResponse.text()).token;
+  const userId = JSON.parse(await loginResponse.text()).userDetails.userId;
+  const apiContext = await operations.createContext(playwright, token);
+  operations.deleteWishlist(apiContext, userId);
 });
 
 test.describe('BookCart', () => {
