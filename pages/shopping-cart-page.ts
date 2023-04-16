@@ -10,6 +10,7 @@ export class ShoppingCartPage {
     }
 
     async goToCheckout() {
+        await this.checkoutButton.waitFor({state:'visible'});
         await this.checkoutButton.click();
     }
 
